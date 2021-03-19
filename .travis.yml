@@ -7,8 +7,6 @@ services:
 
 before_install:
   - pip install docker-compose
-  - echo 'DOCKER_OPTS="$DOCKER_OPTS --registry-mirror=https://mirror.gcr.io"'
-  - sudo service docker restart
 
 script:
   - docker-compose run app sh -c "pytest && flake8"
