@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-docker push juuisle/unstop
-
 # install AWS SDK
 pip install --user awscli
 export PATH=$PATH:$HOME/.local/bin

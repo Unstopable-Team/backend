@@ -9,7 +9,7 @@ before_install:
   - pip install docker-compose
 
 script:
-  - docker-compose run app sh -c "pytest && flake8"
+  - docker-compose run --rm app sh -c "pytest && flake8"
 
 deploy:
   provider: script
