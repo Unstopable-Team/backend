@@ -11,8 +11,8 @@ before_install:
 script:
   - docker-compose run --rm app sh -c "pytest && flake8"
 
-deploy:
-  provider: script
-  script: bash deploy
-  on:
-    branch: master
+# deploy:
+#   provider: script
+#   script: bash deploy
+#   on:
+#     branch: master
