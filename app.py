@@ -15,7 +15,7 @@ from flask_jwt_extended import JWTManager
 from resources.user import UserManagement, UserLogin, UserLogout, TokenRefresh
 from blacklist import BLACKLIST
 
-from api_fetching.WattsightSession import WattsightSession
+from api_fetching.wattsight_session import WattsightSession
 
 
 async_mode = None

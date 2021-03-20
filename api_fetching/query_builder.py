@@ -2,7 +2,11 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class QueryBuilder:
+    """
+    Query builder for wattsight API
+    """
     def __init__(self):
         self.query = {}
 

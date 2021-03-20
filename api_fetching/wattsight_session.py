@@ -3,7 +3,7 @@ from datetime import datetime
 
 import wapi
 
-from QueryBuilder import QueryBuilder
+from query_builder import QueryBuilder
 
 logger = logging.getLogger(__name__)
 
