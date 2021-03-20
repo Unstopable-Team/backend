@@ -1,11 +1,12 @@
 import logging
+import multiprocessing
 from datetime import datetime, timedelta
 
 import wapi
-import multiprocessing
 
 from api_fetching.query_builder import QueryBuilder
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -60,7 +61,7 @@ class WattsightSession:
 
         raise ValueError("No curve found")
 
-    def add_curve_to_event_listener(self, query: dict = None, name=None):
+    def add_curve_to_event_listener(self, *, query: dict = None, name=None):
         """
         Listens for events on the specified curve, identified by the query (or name). The first result of the search is used
         :param name:
@@ -81,8 +82,11 @@ class WattsightSession:
 
         if self.event_processor is None:
             self.event_processor = multiprocessing.Process(target=self.listen_to_curves)
+        else:
+            self.event_processor.terminate()
+            self.event_processor.join()
 
-        self.event_processor.terminate()
+        logging.info("Starting the event listener")
         self.event_processor.start()
 
     def listen_to_curves(self):
@@ -93,8 +97,8 @@ class WattsightSession:
                 continue
 
             data_from = datetime.now() - timedelta(days=1)
-            data = self.get_data_by_name(event.curve.name, data_from=data_from).tail(1)
-            self.callback(event.curve.name, data)
+            _, data = self.get_data_by_name(event.curve.name, data_from=data_from)
+            self.callback(event.curve.name, data.tail(1))
 
 
 if __name__ == '__main__':
