@@ -12,6 +12,8 @@ from threading import Lock
 # Librabry for RestAPI
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+
+from api_fetching.entsoe_client import EntsoeClient
 from resources.user import UserManagement, UserLogin, UserLogout, TokenRefresh
 from blacklist import BLACKLIST
 
@@ -39,8 +41,9 @@ thread_lock = Lock()
 jwt = JWTManager(app)
 db = MongoEngine(app)
 
-# initialize the wattsight API
+# initialize the data APIs
 wattsight_api = WattsightSession(app.config.get("WATTSIGHT_CLIENT_ID"), app.config.get("WATTSIGHT_CLIENT_SECRET"))
+entsoe_api = EntsoeClient(app.config.get("ENTSOE_API_TOKEN"))
 
 # This method will check if a token is blacklisted,
 # and will be called automatically when blacklist is enabled
