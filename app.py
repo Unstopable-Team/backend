@@ -10,6 +10,8 @@ from threading import Lock
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
+from api_fetching.WattsightSession import WattsightSession
+
 
 async_mode = None
 app = Flask(__name__)
@@ -19,6 +21,7 @@ load_dotenv(".env", verbose=True)
 app.config.from_object("setting.DevelopmentConfig")
 api = Api(app)
 
+
 # Initilize websocket
 socket_ = SocketIO(app, async_mode=async_mode)
 thread = None
@@ -27,6 +30,9 @@ thread_lock = Lock()
 
 jwt = JWTManager(app)
 db = MongoEngine(app)
+
+# initialize the wattsight API
+wattsight_api = WattsightSession(app.config.get("WATTSIGHT_CLIENT_ID"), app.config.get("WATTSIGHT_CLIENT_SECRET"))
 
 
 # Testing websocket site
