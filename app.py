@@ -2,6 +2,9 @@ from flask import Flask, render_template, session, copy_current_request_context
 from flask_mongoengine import MongoEngine
 from dotenv import load_dotenv
 
+from flask_cors import CORS
+
+
 # Librabry for WebSocket
 from flask_socketio import SocketIO, emit, disconnect
 from threading import Lock
@@ -19,6 +22,10 @@ load_dotenv(".env", verbose=True)
 
 # Load config from setting.py
 app.config.from_object("setting.DevelopmentConfig")
+
+if DEBUG == True:
+    CORS(app)
+
 api = Api(app)
 
 # Initilize websocket
