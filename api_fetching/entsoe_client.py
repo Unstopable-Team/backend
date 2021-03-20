@@ -7,6 +7,13 @@ class EntsoeClient:
         self.client = EntsoePandasClient(api_key=token)
 
     def get_unavailability_production(self, country_code, start_date, end_date):
+        """
+        Get unavailability of production units (whatever that is)
+        :param country_code: iso code of country
+        :param start_date: epoch time of start in ms
+        :param end_date: epoch time of end in ms
+        :return: pandas dataframe with the requested data
+        """
         start_date = pd.Timestamp(start_date, unit="ms", tz="CET")
         end_date = pd.Timestamp(end_date, unit="ms", tz="CET")
 

@@ -30,11 +30,13 @@ class WattsightSession:
             data_to = datetime.fromtimestamp(data_to // 1000)
 
         if curves[0].curve_type == "INSTANCES":
-            time_series = curves[0].get_instance
+            time_series = curves[0].get_latest()
             if time_series is not None:
                 return time_series.to_pandas()
         elif curves[0].curve_type == "TIME_SERIES":
             return curves[0].get_data(data_from=data_from, data_to=data_to).to_pandas()
+
+        raise ValueError("No curve found")
 
 
 if __name__ == '__main__':
