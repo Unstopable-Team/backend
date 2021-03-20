@@ -1,7 +1,8 @@
 """
 libs.strings
 By default, uses `en-us.json` file inside the `strings` top-level folder.
-If language changes, set `libs.strings.default_locale` and run `libs.strings.refresh()`.
+If language changes, set `libs.strings.default_locale`
+and run `libs.strings.refresh()`.
 """
 import json
 
