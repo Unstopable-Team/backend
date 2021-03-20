@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, copy_current_request_context
 from flask_mongoengine import MongoEngine
 from dotenv import load_dotenv
 
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 
 # Librabry for WebSocket
@@ -64,6 +64,7 @@ def index():
 
 # Socket connection implementation
 @socket_.on('notification', namespace='/forecast')
+@cross_origin()
 def test_message(message):
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
@@ -71,6 +72,7 @@ def test_message(message):
 
 
 @socket_.on('critical_notification', namespace='/forecast')
+@cross_origin()
 def test_broadcast_message(message):
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
@@ -79,6 +81,7 @@ def test_broadcast_message(message):
 
 
 @socket_.on('disconnect_request', namespace='/forecast')
+@cross_origin()
 def disconnect_request():
     @copy_current_request_context
     def can_disconnect():
