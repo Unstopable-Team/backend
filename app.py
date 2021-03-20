@@ -9,6 +9,8 @@ from threading import Lock
 # Librabry for RestAPI
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from resources.user import UserManagement, UserLogin, UserLogout, TokenRefresh
+from blacklist import BLACKLIST
 
 from api_fetching.WattsightSession import WattsightSession
 
@@ -20,7 +22,6 @@ load_dotenv(".env", verbose=True)
 # Load config from setting.py
 app.config.from_object("setting.DevelopmentConfig")
 api = Api(app)
-
 
 # Initilize websocket
 socket_ = SocketIO(app, async_mode=async_mode)
@@ -34,9 +35,22 @@ db = MongoEngine(app)
 # initialize the wattsight API
 wattsight_api = WattsightSession(app.config.get("WATTSIGHT_CLIENT_ID"), app.config.get("WATTSIGHT_CLIENT_SECRET"))
 
+# This method will check if a token is blacklisted,
+# and will be called automatically when blacklist is enabled
 
-# Testing websocket site
-@app.route('/')
+
+@jwt.token_in_blocklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+    return decrypted_token["jti"] in BLACKLIST
+
+
+api.add_resource(UserManagement, '/user')
+api.add_resource(UserLogin, '/login')
+api.add_resource(UserLogout, '/logout')
+api.add_resource(TokenRefresh, '/token')
+
+
+@app.route('/')  # Testing websocket site
 def index():
     return render_template('index.html', async_mode=socket_.async_mode)
 
