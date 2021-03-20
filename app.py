@@ -15,6 +15,8 @@ from flask_jwt_extended import JWTManager
 from resources.user import UserManagement, UserLogin, UserLogout, TokenRefresh
 from blacklist import BLACKLIST
 
+from api_fetching.WattsightSession import WattsightSession
+
 
 async_mode = None
 app = Flask(__name__)
@@ -36,6 +38,9 @@ thread_lock = Lock()
 
 jwt = JWTManager(app)
 db = MongoEngine(app)
+
+# initialize the wattsight API
+wattsight_api = WattsightSession(app.config.get("WATTSIGHT_CLIENT_ID"), app.config.get("WATTSIGHT_CLIENT_SECRET"))
 
 # This method will check if a token is blacklisted,
 # and will be called automatically when blacklist is enabled
