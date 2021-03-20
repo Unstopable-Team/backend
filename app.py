@@ -41,9 +41,23 @@ thread_lock = Lock()
 jwt = JWTManager(app)
 db = MongoEngine(app)
 
+
 # initialize the data APIs
-wattsight_api = WattsightSession(app.config.get("WATTSIGHT_CLIENT_ID"), app.config.get("WATTSIGHT_CLIENT_SECRET"))
+def data_callback(curve_name, data_point):
+    """
+    New data was added to the curve. This is the callback for the event listener on the
+    wattsight API
+    :param curve_name:
+    :param data_point:
+    :return:
+    """
+    pass
+
+
+wattsight_api = WattsightSession(app.config.get("WATTSIGHT_CLIENT_ID"), app.config.get("WATTSIGHT_CLIENT_SECRET"),
+                                 new_data_callback=data_callback)
 entsoe_api = EntsoeClient(app.config.get("ENTSOE_API_TOKEN"))
+
 
 # This method will check if a token is blacklisted,
 # and will be called automatically when blacklist is enabled
