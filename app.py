@@ -2,6 +2,9 @@ from flask import Flask, render_template, session, copy_current_request_context
 from flask_mongoengine import MongoEngine
 from dotenv import load_dotenv
 
+from flask_cors import CORS
+
+
 # Librabry for WebSocket
 from flask_socketio import SocketIO, emit, disconnect
 from threading import Lock
@@ -17,10 +20,14 @@ from api_fetching.WattsightSession import WattsightSession
 
 async_mode = None
 app = Flask(__name__)
+CORS(app)
+
 load_dotenv(".env", verbose=True)
 
 # Load config from setting.py
 app.config.from_object("setting.DevelopmentConfig")
+
+
 api = Api(app)
 
 # Initilize websocket
