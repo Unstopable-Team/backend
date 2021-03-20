@@ -16,6 +16,9 @@ class ProductionConfig(Config):
     MONGODB_SETTINGS = {
         'host': os.environ.get("DATABASE_URL")
     }
+    WATTSIGHT_CLIENT_ID = os.environ.get("WATTSIGHT_CLIENT_ID")
+    WATTSIGHT_CLIENT_SECRET = os.environ.get("WATTSIGHT_CLIENT_SECRET")
+    ENTSOE_API_TOKEN = os.environ.get("ENTSOE_API_TOKEN")
 
 
 class DevelopmentConfig(Config):
@@ -26,6 +29,7 @@ class DevelopmentConfig(Config):
         'connect': False
     }
     WATTSIGHT_CLIENT_ID = os.environ.get("WATTSIGHT_CLIENT_ID")
+    WATTSIGHT_CLIENT_SECRET = os.environ.get("WATTSIGHT_CLIENT_SECRET")
     ENTSOE_API_TOKEN = os.environ.get("ENTSOE_API_TOKEN")
 
 
