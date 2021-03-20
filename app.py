@@ -18,13 +18,13 @@ from blacklist import BLACKLIST
 
 async_mode = None
 app = Flask(__name__)
+CORS(app)
+
 load_dotenv(".env", verbose=True)
 
 # Load config from setting.py
 app.config.from_object("setting.DevelopmentConfig")
 
-if DEBUG == True:
-    CORS(app)
 
 api = Api(app)
 
