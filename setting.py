@@ -25,6 +25,8 @@ class DevelopmentConfig(Config):
         'host': os.environ.get("DATABASE_URL"),
         'connect': False
     }
+    WATTSIGHT_CLIENT_ID = os.environ.get("WATTSIGHT_CLIENT_ID")
+    ENTSOE_API_TOKEN = os.environ.get("ENTSOE_API_TOKEN")
 
 
 class TestingConfig(Config):
